@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import "./styles/App.css";
+import bg from "./img/bg.png";
+import Orb from "./Components/Orb/Orb";
+import Navigation from "./Components/Navigation/Navigation";
+import Dashboard from "./Components/Dashboard/Dashboard";
+//import Income from "./Components/Income/Income";
+//import Expenses from "./Components/Expenses/Expenses";
+import { useGlobalContext } from "./context/globalContext";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [active, setActive] = useState(1);
+  const global = useGlobalContext();
+  console.log(global);
+
+  const displayData = () => {
+    switch (active) {
+      case 1:
+        return <Dashboard />;
+      default:
+        return <Dashboard />;
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App" style={{ backgroundImage: `url(${bg})` }}>
+      <Orb />
+      <div className="main-layout">
+        <Navigation active={active} setActive={setActive} />
+        <h1>heyy</h1>
+        <main className="inner-layout">{displayData()}</main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
